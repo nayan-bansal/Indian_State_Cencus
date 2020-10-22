@@ -1,8 +1,7 @@
 package Cencus.India_Cencus_Problem;
 
-package Cencus.India_Cencus_Problem;
-
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import junit.framework.Assert;
 
@@ -18,5 +17,17 @@ private static String INDIA_CENSUS_CSV_FILE_PATH = "D:\\Capgemini Training\\CG P
             Assert.assertEquals(29,numOfRecords);
         } catch (CencusAnalyzerException e) { }
     }
+	
+	@Test
+	public void incorrectFileTest() {
+		try {
+			StateCencusAnalyzer censusAnalyser = new StateCencusAnalyzer();
+			ExpectedException exceptionRule = ExpectedException.none();
+			exceptionRule.expect(CencusAnalyzerException.class);
+			censusAnalyser.readCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+		} catch (CencusAnalyzerException e) {
+			Assert.assertEquals(CencusAnalyzerException.ExceptionType.CENSUS_FILE_EXCEPTION, e.type);
+		}
+	}
 	
 }
